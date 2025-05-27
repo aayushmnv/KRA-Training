@@ -1,0 +1,35 @@
+What is Concurrency ?
+=> Concurrency in JS means the ability to handle multiple tasks at the same time (not literally at the same moment, since JS is single-threaded, but via async mechanisms like web apis).
+
+JavaScript is Single-Threaded
+JS runs in a single thread – only one line of code runs at a time.
+
+But async code (like setTimeout, fetch, promises) is handled via the Event Loop with the help of Web APIs.
+
+The Event Loop =>
+The Event Loop manages how and when async code is executed.
+
+JS Run all synchronous code (like console.log, functions, loops, etc.)
+When it hits async stuff (like setTimeout or a Promise), it gives them to Web APIs
+After those complete, their callbacks go into queues.
+The Event Loop runs continuously, picking tasks from those queues and pushing them to the Call Stack to execute.
+
+
+Call Stack: Runs your main JS code synchronously.
+
+Web APIs: Browser-provided – handles things like setTimeout, DOM events, fetch.
+
+Callback Queue (Task Queue): Stores callbacks like from setTimeout, DOM events.
+
+Microtask Queue: Stores promise callbacks (.then, catch, finally) – executed before the Callback Queue.
+
+The Event Loop constantly checks:
+“Is the call stack empty?”
+If yes → it pushes tasks from Microtask Queue first, then Callback Queue.
+
+
+Phases (in Event Loop) => 	Steps that JS runtime takes to manage and execute different kinds of async tasks.
+Microtasks -	High-priority tasks (Promises, nextTick)
+Macrotasks -	Lower priority (setTimeout, I/O, setInterval)
+Call Stack -	Where JS executes one thing at a time
+Event Loop -	The manager that moves tasks from queues → stack
