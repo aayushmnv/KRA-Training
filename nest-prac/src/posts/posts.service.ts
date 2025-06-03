@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
 // import { Post } from './interfaces/post.interface';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
@@ -6,7 +6,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Post } from './entity/post.entity';
 import { Repository } from 'typeorm';
 import { UsersService } from 'src/users/users.service';
-import { User } from 'src/users/entities/user.entity';
+import { User, UserRole } from 'src/users/entities/user.entity';
 
 @Injectable()
 export class PostsService {
@@ -61,8 +61,12 @@ export class PostsService {
   }
 
 
-  async remove(id: number): Promise<void> {
+  async remove(id: number,user :User): Promise<void> {
     const findPostToDelete = await this.findOne(id)
+
+    if(findPostToDelete.user.id !== user.id && user.role !== UserRole.ADMIN){
+      throw new ForbiddenException("You don't have access to delete this post")
+    }
 
     await this.postsRepository.remove(findPostToDelete)
   }

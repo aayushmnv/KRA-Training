@@ -12,7 +12,7 @@ import { JwtStrategy } from './jwt.strategy';
     UsersModule ,
     JwtModule.register({
       secret:'supersecretkey',
-      signOptions: {expiresIn: '15m'}
+      signOptions: {expiresIn: '30m'}
     })
   ],
   providers: [AuthService,JwtStrategy],

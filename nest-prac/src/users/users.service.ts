@@ -45,4 +45,14 @@ export class UsersService {
         return user;
     }
 
+    async remove(id:number ) :Promise<void> {
+        
+        const userData = await this.usersRepository.findOneBy({id})
+        if(!userData){
+            throw new NotFoundException(`user with id ${id} not found`)
+        }
+
+       await this.usersRepository.remove(userData)
+    }
+
 }

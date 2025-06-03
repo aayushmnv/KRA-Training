@@ -1,8 +1,10 @@
-import { ConflictException, Injectable, UnauthorizedException } from '@nestjs/common';
+import { ConflictException, ForbiddenException, Injectable, UnauthorizedException } from '@nestjs/common';
 import { UsersService } from 'src/users/users.service';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 import { CreateUserDto } from 'src/users/dto/create-user.dto';
+import { User, UserRole } from 'src/users/entities/user.entity';
+import { CurrentUser } from './user.decorator';
 
 @Injectable()
 export class AuthService {
@@ -11,8 +13,12 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
-  async register(createUserDto: CreateUserDto) {
-  const { email } = createUserDto;
+  async register(createUserDto: CreateUserDto ) {
+  const { email ,role} = createUserDto;
+   // role === UserRole.ADMIN && 
+  // if (CurrentUser?.role !== UserRole.ADMIN) {
+  //   throw new ForbiddenException('Only admins can create admins');
+  // }
 
   // if email is already registered
   const existingUser = await this.usersService.findByEmail(email);
