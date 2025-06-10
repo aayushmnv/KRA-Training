@@ -5,7 +5,6 @@ import { BlogsService } from './blogs.service';
 import { User as GetUser } from '../auth/decorators/user.decorator';
 import { CreateBlogDto } from './dto/create-blog.dto';
 import { Permissions } from 'src/auth/decorators/permissions.decorator';
-import { AuthGuard } from '@nestjs/passport';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { PermissionGuard } from 'src/auth/guards/permissions.guard';
 
@@ -13,7 +12,7 @@ import { PermissionGuard } from 'src/auth/guards/permissions.guard';
 export class BlogsController {
   constructor(private readonly blogsService: BlogsService) {}
 
-@UseGuards(AuthGuard('jwt'), PermissionGuard)
+@UseGuards(JwtAuthGuard, PermissionGuard)
 @Permissions('create_blog')
 @Post()
 create(@Body() dto: CreateBlogDto, @GetUser('id') userId: number) {

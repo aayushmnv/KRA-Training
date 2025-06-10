@@ -36,12 +36,12 @@ async login(email: string, password: string) {
   const user = await this.userRepo.findOne({
     where: { email },
     relations: ['role'],
-    select: ['id', 'email', 'password', 'role'] // include password manually
+    select: ['id', 'email', 'password', 'role'] 
   });
 
-  console.log('Email:', email);
-  console.log('Password from req:', password);
-  console.log('User fetched from DB:', user);
+  // console.log('Email:', email);
+  // console.log('Password from req:', password);
+  // console.log('User fetched from DB:', user);
 
 
   if (!user || !(await bcrypt.compare(password, user.password))) {

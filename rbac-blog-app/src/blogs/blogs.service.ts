@@ -43,6 +43,7 @@ export class BlogsService {
   }
 
   async remove(id: number, user: any) {
+    
     const blog = await this.blogRepo.findOne({ where: { id }, relations: ['user'] });
     if (!blog) throw new NotFoundException('Blog not found');
 
