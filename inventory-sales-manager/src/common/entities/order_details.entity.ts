@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, CreateDateColumn, UpdateDateColumn, JoinColumn } from 'typeorm';
 import { Variant } from './variants.entity';
 import { SalesOrder } from './sales_order.entity';
 
@@ -21,8 +21,10 @@ export class OrderDetails {
   updated_at: Date;
 
   @ManyToOne(() => Variant, (variant) => variant.orderDetails, { eager: true })
+  @JoinColumn({name : "variant_id"})
   variant: Variant;
 
   @ManyToOne(() => SalesOrder, (order) => order.orderDetails, { eager: false })
+  @JoinColumn({name:"sales_order_id"})
   sales_order: SalesOrder;
 }

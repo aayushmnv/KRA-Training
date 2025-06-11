@@ -24,23 +24,34 @@ import { Refund } from './common/entities/refund.entity';
 import { ReturnOrder } from './common/entities/return_order.entity';
 import { SalesOrder } from './common/entities/sales_order.entity';
 import { StockMovement } from './common/entities/stock-movements.entity';
+import { AuthModule } from './auth/auth.module';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
-  imports: [TypeOrmModule.forRoot({
-      type: 'postgres',
-      host: 'localhost',
-      port: 5432,
-      username: 'postgres',
-      password: 'Aayush1209',
-      database: 'inventory_sales',
-      entities: [User,Role,Address,Permission,
+  imports: [
+     ConfigModule.forRoot({
+      isGlobal: true, 
+      envFilePath: '.env', 
+    })
+    ,TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (config: ConfigService) => ({
+        type: 'postgres',
+        host: config.get('DB_HOST'),
+        port: config.get<number>('DB_PORT'),
+        username: config.get('DB_USERNAME'),
+        password: config.get('DB_PASSWORD'),
+        database: config.get('DB_NAME'),
+        autoLoadEntities: true,
+        synchronize: true,
+        entities: [User,Role,Address,Permission,
         Product,Price,Variant,Color, Size,Discount,
         BatchLot , Invoice,OrderDetails,SupplierPayment,
         Payment,PurchaseItem,PurchaseOrder,Receipt,Refund,
-        ReturnOrder,SalesOrder,StockMovement,],
-      autoLoadEntities: true,     
-      synchronize: true,  
-    })],
+        ReturnOrder,SalesOrder,StockMovement,]
+      }),
+    }), AuthModule],
   controllers: [AppController],
   providers: [AppService],
 })

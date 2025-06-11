@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, CreateDateColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, CreateDateColumn, JoinColumn } from 'typeorm';
 import { Variant } from './variants.entity';
 
 
@@ -8,20 +8,21 @@ export class StockMovement {
   id: number;
 
   @Column()
-  type: string; // In or Out
+  type: string; 
 
   @Column()
   quantity: number;
 
   @Column()
-  source: string; //  "purchase" ,  "sale" or  "return"
+  source: string; 
 
   @Column()
-  reference_id: number; // link to purchase/sales/return etc.
+  reference_id: number; 
 
   @CreateDateColumn()
   created_at: Date;
 
   @ManyToOne(() => Variant, (variant) => variant.stockMovements, { eager: false })
+  @JoinColumn({name:"variant_id"})
   variant: Variant;
 }

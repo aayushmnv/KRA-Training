@@ -36,7 +36,8 @@ export class User {
     salesOrders: SalesOrder[]
 
     @OneToMany(() => PurchaseOrder, (po) => po.supplier)
-    purchase_orders: PurchaseOrder
+    purchaseOrders: PurchaseOrder[];
+
 
     @OneToMany(() => Receipt, (receipt) => receipt.supplier)
     receipts: Receipt[];

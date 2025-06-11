@@ -6,6 +6,7 @@ import {
   OneToMany,
   CreateDateColumn,
   UpdateDateColumn,
+  JoinColumn,
 } from 'typeorm';
 import { Product } from './products.entity';
 import { Color } from './colors.entity';
@@ -32,12 +33,15 @@ export class Variant {
   updated_at: Date;
 
   @ManyToOne(() => Product, (product) => product.variants, { eager: false })
+  @JoinColumn({name : "product_id"})
   product: Product;
 
-  @ManyToOne(() => Color, (color) => color.variants, { eager: true })
-  color: Color;
+  @ManyToOne(() => Color, (color) => color.variants, { eager: true , nullable: true,cascade: true})
+  @JoinColumn({name : "color_id"})
+   color: Color;
 
-  @ManyToOne(() => Size, (size) => size.variants, { eager: true })
+  @ManyToOne(() => Size, (size) => size.variants, { eager: true , nullable: true ,cascade: true})
+  @JoinColumn({name : "size_id"})
   size: Size;
 
   @OneToMany(() => StockMovement, (sm) => sm.variant)

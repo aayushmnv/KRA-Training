@@ -22,12 +22,12 @@ export class SalesOrder {
   @UpdateDateColumn()
   updated_at: Date;
 
-  @OneToMany(() => OrderDetails, (orderDetail) => orderDetail.sales_order)
+  @OneToMany(() => OrderDetails, (od) => od.sales_order)
   orderDetails: OrderDetails[];
 
-  @OneToMany(()=>ReturnOrder , (ro)=>ro.salesOrder)
-  returnOrders : ReturnOrder
+  @OneToMany(() => ReturnOrder, (ro) => ro.salesOrder)
+  returnOrders: ReturnOrder[];
 
-  @OneToOne(() => Invoice, (invoice) => invoice.salesOrder)
+  @OneToOne(() => Invoice, (inv) => inv.salesOrder, { cascade: true })
   invoice: Invoice;
 }

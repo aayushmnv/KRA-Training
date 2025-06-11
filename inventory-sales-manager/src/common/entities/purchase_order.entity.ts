@@ -9,7 +9,7 @@ export class PurchaseOrder {
   @PrimaryGeneratedColumn('increment')
   id: number;
 
-  @ManyToOne(() => User, (user) => user.purchase_orders, { eager: true })
+  @ManyToOne(() => User, (user) => user.purchaseOrders, { eager: true })
   @JoinColumn({ name: 'supplier_id' })
   supplier: User;
 
