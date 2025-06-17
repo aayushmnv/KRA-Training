@@ -26,6 +26,9 @@ export class Variant {
   @Column()
   stock_quantity: number;
 
+  @Column({nullable:true})
+  reorder_point: number;
+
   @CreateDateColumn()
   created_at: Date;
 

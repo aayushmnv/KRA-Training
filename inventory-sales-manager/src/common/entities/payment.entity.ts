@@ -6,7 +6,7 @@ export class Payment {
   @PrimaryGeneratedColumn('increment')
   id: number;
 
-  @Column()
+  @Column({ type: 'numeric', precision: 10, scale: 2 })
   payment_amount: number;
 
   @Column()

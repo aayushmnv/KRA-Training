@@ -16,7 +16,7 @@ export class Address {
   @Column()
   area: string;
 
-  @Column()
+  @Column({ nullable: true })
   street: string;
 
   @Column()
@@ -33,9 +33,6 @@ export class Address {
 
   @Column({ nullable: true })
   landmark: string;
-
-  @Column({ nullable: true })
-  credit_limit: number;
 
   @CreateDateColumn()
   created_at: Date;

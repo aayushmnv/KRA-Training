@@ -25,6 +25,9 @@ export class User {
     @Column({ nullable: true })
     gst_no: string;
 
+    @Column({ nullable: true })
+    credit_limit: number;
+
     @ManyToOne(() => Role, (role) => role.users, { eager: true })
     @JoinColumn({ name: 'role_id' })
     role: Role;

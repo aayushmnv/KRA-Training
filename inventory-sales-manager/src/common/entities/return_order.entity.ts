@@ -20,9 +20,9 @@ export class ReturnOrder {
   variant: Variant;
 
   @Column()
-  quantity: string;
+  quantity: number;
 
-  @Column('text')
+  @Column()
   reason: string;
 
   @Column()

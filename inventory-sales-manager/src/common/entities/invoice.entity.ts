@@ -11,7 +11,7 @@ export class Invoice {
   @JoinColumn({ name: 'sales_order_id' })
   salesOrder: SalesOrder;
 
-  @Column()
+  @Column({ type: 'numeric', precision: 10, scale: 2 })
   total_amount: number;
 
   @Column()

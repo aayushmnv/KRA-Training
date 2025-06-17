@@ -11,7 +11,7 @@ export class OrderDetails {
   @Column()
   quantity: number;
 
-  @Column()
+  @Column('numeric', { precision: 10, scale: 2 })
   unit_price: number;
 
   @CreateDateColumn()

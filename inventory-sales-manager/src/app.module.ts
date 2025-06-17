@@ -8,7 +8,6 @@ import { Address } from './common/entities/addresses.entity';
 import { Permission } from './common/entities/permissions.entity';
 import { Product } from './common/entities/products.entity';
 import { Price } from './common/entities/prices.entity';
-import { Variant } from './common/entities/variants.entity';
 import { Color } from './common/entities/colors.entity';
 import { Size } from './common/entities/sizes.entity';
 import { Discount } from './common/entities/discounts.entity';
@@ -26,14 +25,19 @@ import { SalesOrder } from './common/entities/sales_order.entity';
 import { StockMovement } from './common/entities/stock-movements.entity';
 import { AuthModule } from './auth/auth.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { ProductModule } from './product/product.module';
+import { UserModule } from './user/user.module';
+import { Variant } from './common/entities/variants.entity';
+import { PurchaseModuleModule } from './purchase_module/purchase_module.module';
+import { CustomerModule } from './customer/customer.module';
 
 @Module({
   imports: [
-     ConfigModule.forRoot({
-      isGlobal: true, 
-      envFilePath: '.env', 
+    ConfigModule.forRoot({
+      isGlobal: true,
+      envFilePath: '.env',
     })
-    ,TypeOrmModule.forRootAsync({
+    , TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: (config: ConfigService) => ({
@@ -45,14 +49,14 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
         database: config.get('DB_NAME'),
         autoLoadEntities: true,
         synchronize: true,
-        entities: [User,Role,Address,Permission,
-        Product,Price,Variant,Color, Size,Discount,
-        BatchLot , Invoice,OrderDetails,SupplierPayment,
-        Payment,PurchaseItem,PurchaseOrder,Receipt,Refund,
-        ReturnOrder,SalesOrder,StockMovement,]
+        entities: [User, Role, Address, Permission,
+          Product, Price, Variant, Color, Size, Discount,
+          BatchLot, Invoice, OrderDetails, SupplierPayment,
+          Payment, PurchaseItem, PurchaseOrder, Receipt, Refund,
+          ReturnOrder, SalesOrder, StockMovement,]
       }),
-    }), AuthModule],
+    }), AuthModule, ProductModule, UserModule, PurchaseModuleModule, CustomerModule],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule { }

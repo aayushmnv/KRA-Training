@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
 import { Product } from './products.entity';
 
 
@@ -7,8 +7,8 @@ export class Price {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
-  price: number;
+  @Column({nullable:false})
+  amount: number;
 
   @Column()
   valid_from: Date;
@@ -17,5 +17,6 @@ export class Price {
   valid_to: Date;
 
   @ManyToOne(() => Product, (product) => product.prices)
+  @JoinColumn({name:'product_id'})
   product: Product;
 }

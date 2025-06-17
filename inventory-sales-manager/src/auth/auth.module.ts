@@ -4,7 +4,6 @@ import { AuthController } from './auth.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from 'src/common/entities/users.entity';
 import { Role } from 'src/common/entities/roles.entity';
-import { Permission } from 'src/common/entities/permissions.entity';
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
@@ -24,7 +23,7 @@ import { JwtStrategy } from './jwt.strategy';
         },
       }),
     }),
-    TypeOrmModule.forFeature([User, Role, Permission]),
+    TypeOrmModule.forFeature([User, Role]),
   ],
   providers: [AuthService,JwtStrategy],
   controllers: [AuthController],

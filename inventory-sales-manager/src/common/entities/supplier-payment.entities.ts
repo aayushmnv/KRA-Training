@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, CreateDateColumn, UpdateDateColumn, JoinColumn } from 'typeorm';
 import { PurchaseOrder } from './purchase_order.entity';
 
 @Entity()
@@ -15,10 +15,11 @@ export class SupplierPayment {
   @Column()
   status: string;
 
-  @Column()
+  @Column({nullable:true})
   method: string;
 
   @ManyToOne(() => PurchaseOrder, (order) => order.payments, { eager: true })
+  @JoinColumn({name:"purchase_order_id"})
   purchaseOrder: PurchaseOrder;
 
   @CreateDateColumn()

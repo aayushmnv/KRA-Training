@@ -21,11 +21,14 @@ export class Product {
   @Column()
   sub_category: string;
 
-  @Column()
+  @Column({nullable:true})
   brand: string;
 
-  @Column()
+  @Column({nullable:true})
   tag: string;
+
+  @Column({unique :true})
+  sku : string;
 
   @CreateDateColumn()
   created_at: Date;
@@ -38,7 +41,7 @@ export class Product {
   variants: Variant[];
 
 
-  @OneToMany(() => Price, (price) => price.product)
+  @OneToMany(() => Price, (price) => price.product ,{ eager: true })
   prices: Price[];
 
 
