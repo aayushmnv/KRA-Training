@@ -24,15 +24,42 @@ export class UserService {
 
     async getAllProfile(role?: string) {
         if (role) {
-            return this.userRepo.find({
+            const users = await this.userRepo.find({
                 where: { role: { name: role } },
                 relations: ['role'],
             });
+
+            const mappedUser = users.map((user)=>{
+
+                return {id:user.id,name:user.name,
+                    contact_no :user.contact_no,email :user.email,
+                    credit_limit:user.credit_limit,gst_no:user.gst_no,role:user.role.name,
+                   permissions:user.role.permissions
+                }
+
+            })
+
+            return mappedUser;
+
+            
         }
 
-        return this.userRepo.find({
-            relations: ['role'],
-        });
+        const users = await this.userRepo.find({
+                where: { role: { name: role } },
+                relations: ['role'],
+            });
+
+            const mappedUser = users.map((user)=>{
+
+                return {id:user.id,name:user.name,
+                    contact_no :user.contact_no,email :user.email,
+                    credit_limit:user.credit_limit,gst_no:user.gst_no,role:user.role.name,
+                   permissions:user.role.permissions
+                }
+
+            })
+
+            return mappedUser;
     }
 
     async getProfile(userId: number) {

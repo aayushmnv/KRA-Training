@@ -1,98 +1,275 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Inventory Sales Manager
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+A comprehensive NestJS-based inventory and sales management system with role-based access control and multi-user functionality.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Features=>
 
-## Description
+### User Management
+- Role-based authentication (Admin, Customer, Supplier, Seller)
+- JWT-based authentication
+- User profile management
+- Address management for users
+- Credit limit management for customers
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+### Product Management 
+- Product CRUD operations
+- Product variants (size, color)
+- Price management
+- Discount management
+- Batch lot tracking
+- Stock movement tracking
+- Product categorization and filtering
 
-## Project setup
+### Purchase Management
+- Purchase order creation
+- Supplier order management
+- Order status tracking
+- Receipt generation
+- Quality check tracking
+- Batch lot creation
+- Supplier payment processing
+- Stock movement tracking for purchases
 
+### Sales Management
+- Sales order creation
+- Order status tracking
+- Invoice generation
+- Payment processing
+- Multiple payment methods support
+- Credit limit validation
+
+### Return/Refund Management
+- Return request creation
+- Return approval workflow
+- Refund processing
+- Stock adjustment for returns
+- Return reason tracking
+
+### Inventory Control
+- Real-time stock tracking
+- Stock movement history
+- Low stock alerts
+- Batch lot tracking
+- Stock adjustment tracking
+
+## Technology Stack
+
+- NestJS
+- PostgreSQL
+- TypeORM
+- JWT Authentication
+- Class Validator
+
+## Prerequisites
+
+- Node.js (v14+)
+- PostgreSQL
+- npm/yarn
+## Setup
+
+1. Clone the repository
+2. Install dependencies:
 ```bash
-$ npm install
+npm install
 ```
 
-## Compile and run the project
-
-```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+3. Create `.env` file with following variables:
+```
+DB_HOST=localhost
+DB_PORT=5432
+DB_USERNAME=postgres 
+DB_PASSWORD=Aayush1209
+DB_NAME=inventory_sales
+JWT_SECRET=
+JWT_EXPIRES_IN=1D
 ```
 
-## Run tests
-
+4. Start the application:
 ```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+npm run start:dev
 ```
 
-## Deployment
+## API Testing Guide
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+### Authentication
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+#### Login Credentials
+```
+Customer:
+- Email: customera@gmail.com
+- Password: 12345678
 
-```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
+Admin:
+- Email: superadmin@gmail.com  
+- Password: 12345678
+
+Supplier:
+- Email: supplier@gmail.com
+- Password: 12345678
+
+Seller:
+- Email: aayush.seller@gmail.com
+- Password: 12345678
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+#### Auth Endpoints
 
-## Resources
+```
+POST /auth/register
+- Register new customer
+Body: {
+  "name": "string",
+  "email": "string",
+  "password": "string",
+  "contact_no": "string",
+  "gst_no": "string" (optional)
+}
 
-Check out a few resources that may come in handy when working with NestJS:
+POST /auth/login
+Body: {
+  "email": "string",
+  "password": "string"
+}
+```
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+### Product Management (Seller Access)
 
-## Support
+```
+POST /product/create
+- Create new product with variants
+Body: {
+  "name": "string",
+  "description": "string",
+  "category": "string",
+  "brand": "string",
+  "price": number,
+  "variants": [
+    {
+      "color": "string",
+      "size": "string",
+      "stock_quantity": number
+    }
+  ]
+}
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+GET /product
+- Get all products
+Query params: category, brand, minPrice, maxPrice, search
 
-## Stay in touch
+PATCH /product/:id
+- Update product
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+POST /product/:id/discounts
+- Add product discount
+```
 
-## License
+### Purchase Module (Seller/Supplier)
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+```
+POST /purchase
+- Create purchase order (Seller)
+Body: {
+  "supplier_id": number,
+  "items": [
+    {
+      "variant_id": number,
+      "quantity": number,
+      "unit_price": number
+    }
+  ]
+}
+
+PATCH /purchase/:id/status
+- Update order status (Supplier)
+Body: {
+  "status": "pending" | "completed" | "cancelled"
+}
+
+POST /purchase/payment
+- Process supplier payment (Seller)
+Body: {
+  "orderId": number,
+  "method": "string"
+}
+```
+
+### Customer Operations
+
+```
+POST /customer/create
+- Create sales order
+Body: {
+  "items": [
+    {
+      "variant_id": number,
+      "quantity": number
+    }
+  ]
+}
+
+POST /customer/payment
+- Process payment
+Body: {
+  "invoiceId": number,
+  "method": "cash" | "card" | "credit"
+}
+
+POST /customer/return
+- Create return request
+Body: {
+  "sales_order_id": number,
+  "variant_id": number,
+  "quantity": number,
+  "reason": "string",
+  "type": "refund" | "exchange"
+}
+```
+
+### User Management (Admin)
+
+```
+GET /user
+- Get all users
+Query params: role
+
+PATCH /user/:id/role
+- Update user role
+Body: {
+  "role": "customer" | "seller" | "supplier"
+}
+
+PATCH /user/:id/credit-limit
+- Update customer credit limit
+Body: {
+  "credit_limit": number
+}
+```
+
+## Authentication
+
+For protected routes, include the JWT token in request headers:
+```
+Authorization: Bearer <token>
+```
+
+## Testing Flow
+
+1. Login with appropriate credentials to get JWT token
+2. Set token in request Authorization header
+3. Test endpoints based on role permissions:
+   - Admin can manage users and view all data
+   - Seller can manage products and purchase orders
+   - Supplier can update purchase order status
+   - Customer can place orders and create returns
+
+## Error Handling
+
+The API returns appropriate HTTP status codes:
+- 200: Success
+- 201: Created
+- 400: Bad Request
+- 401: Unauthorized
+- 403: Forbidden
+- 404: Not Found
+- 409: Conflict
+- 500: Server Error

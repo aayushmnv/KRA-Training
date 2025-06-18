@@ -1,6 +1,9 @@
 import { IsInt, IsOptional, IsString, ValidateNested, IsArray } from 'class-validator';
 import { Type } from 'class-transformer';
 
+
+
+
 class VariantUpdateDto {
   @IsInt()
   variantId: number;

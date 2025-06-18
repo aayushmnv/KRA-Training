@@ -1,10 +1,17 @@
-import { IsNumber, IsOptional, IsString } from "class-validator";
+import { Type } from "class-transformer";
+import { IsArray, isNumber, IsNumber, IsOptional, IsString, ValidateNested } from "class-validator";
 
 
 
-type VariantInput = {
+export class VariantInput  {
+    
+    @IsString()
     size: string;
+    
+    @IsString()
     color: string;
+
+    @IsNumber()
     stock_quantity: number;
 };
 
@@ -38,6 +45,9 @@ export class CreateProductDto {
 
 
 
+    @IsArray()
+    @ValidateNested({ each: true })
+    @Type(() => VariantInput)
     variants: VariantInput[];
 
 

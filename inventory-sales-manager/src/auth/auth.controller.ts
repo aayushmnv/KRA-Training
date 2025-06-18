@@ -3,6 +3,8 @@ import { AuthService } from './auth.service';
 import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
 import { JwtAuthGuard } from 'src/common/guards/jwt-auth.guard';
+import { PermissionGuard } from 'src/common/guards/permissions.guard';
+import { Permissions } from 'src/common/decorators/permissions.decorator';
 
 @Controller('auth')
 export class AuthController {
@@ -19,7 +21,8 @@ export class AuthController {
     return this.authService.login(loginDto);
   }
    
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard,PermissionGuard)
+  @Permissions('is-admin')
   @Get('users')
   getAllUser(){
     return this.authService.getAllUser();

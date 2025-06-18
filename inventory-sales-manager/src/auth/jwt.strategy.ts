@@ -16,7 +16,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     const secret = configService.get<string>('JWT_SECRET');
 
     if (!secret) {
-      throw new Error('secret key is not defined in environment variables');
+      throw new Error('secret key is not defined in env');
     }
 
     super({

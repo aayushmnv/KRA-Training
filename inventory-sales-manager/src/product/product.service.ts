@@ -126,6 +126,8 @@ export class ProductService {
         const query = this.productRepo
             .createQueryBuilder('product')
             .leftJoinAndSelect('product.variants', 'variant')
+            .leftJoinAndSelect('variant.size', 'size')
+            .leftJoinAndSelect('variant.color', 'color')
             .leftJoinAndSelect('product.prices', 'price');
 
         if (search) {
@@ -135,13 +137,13 @@ export class ProductService {
             );
         }
         if (category) {
-            query.andWhere('(product.category ILIKE :category)', { category : `%${category}%` })
+            query.andWhere('(product.category ILIKE :category)', { category: `%${category}%` })
         };
-        if (subCategory){
-             query.andWhere('product.sub_category ILIKE :subCategory', { subCategory :`%${subCategory}%` })
+        if (subCategory) {
+            query.andWhere('product.sub_category ILIKE :subCategory', { subCategory: `%${subCategory}%` })
         };
         if (brand) {
-            query.andWhere('product.brand ILIKE :brand', { brand : `%${brand}%`})
+            query.andWhere('product.brand ILIKE :brand', { brand: `%${brand}%` })
         };
         if (minPrice) query.andWhere('price.amount >= :minPrice', { minPrice });
         if (maxPrice) query.andWhere('price.amount <= :maxPrice', { maxPrice });
@@ -153,11 +155,29 @@ export class ProductService {
 
         const [products, total] = await query.getManyAndCount();
 
+        const returnedProducts = products.map((product) => {
+            return {
+                id: product.id,
+                title: product.title,
+                description: product.description,
+                category: product.category,
+                subCategory: product.sub_category,
+                brand: product.brand,
+                price: product.prices?.[0]?.amount ?? 0,
+                variants: product.variants.map((variant) => ({
+                    variantId: variant.id,
+                    color: variant.color?.name ?? null,
+                    size: variant.size?.name ?? null,
+                }))
+            };
+        });
+
+
         return {
             total,
             page,
             limit,
-            products
+            products:returnedProducts
         };
     }
 
@@ -183,7 +203,18 @@ export class ProductService {
         const discountedPrice = currentPrice - (currentPrice * discountPercentage) / 100;
 
         return {
-            ...product,
+                id: product.id,
+                title: product.title,
+                description: product.description,
+                category: product.category,
+                subCategory: product.sub_category,
+                brand: product.brand,
+                // price: product.prices?.[0]?.amount ?? 0,
+                variants: product.variants.map((variant) => ({
+                    variantId: variant.id,
+                    color: variant.color?.name ?? null,
+                    size: variant.size?.name ?? null,
+                })),
             price: currentPrice,
             active_discount: activeDiscount || null,
             discounted_price: Math.round(discountedPrice),
@@ -273,7 +304,7 @@ export class ProductService {
 
         return { message: 'Discount added successfully', discount };
     }
-  
+
 
     // async getDiscountByVariant(variant_id : number){
 
@@ -283,8 +314,8 @@ export class ProductService {
     //     })
 
     // }
-    
-    
+
+
 
 
 
