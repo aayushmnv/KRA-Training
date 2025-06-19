@@ -6,35 +6,36 @@ import { updateBookArgs } from "./args/updateBook.args";
 
 
 @Resolver(of => Book)
-export class BookResolver{
-  
-    constructor(private readonly bookService:BookService){}
-  
-    @Query(returns =>[Book],{name:"books"})
-    getAllBooks(){
+export class BookResolver {
+
+    constructor(private readonly bookService: BookService) { }
+
+    @Query(returns => [Book], { name: "books" })
+    getAllBooks() {
         return this.bookService.findAllBooks();
 
     }
-    @Query(returns =>[Book],{name:"bookById"})
-    getBookById(@Args({name:'bookId',type:()=>Int})id:number){
+    @Query(returns => [Book], { name: "bookById" })
+    getBookById(@Args({ name: 'bookId', type: () => Int }) id: number) {
         return this.bookService.findBookById(id);
 
     }
 
     @Mutation(returns => String, { name: "deleteBook" })
-deleteBookById(@Args({ name: 'bookId', type: () => Int }) id: number) {
-return this.bookService.deleteBook(id);}
+    deleteBookById(@Args({ name: 'bookId', type: () => Int }) id: number) {
+        return this.bookService.deleteBook(id);
+    }
 
-@Mutation(returns => String, { name: "addBook" })
-addBook(@Args("addBookArgs") addBookArgs: AddBookArgs) {
-return this.bookService.addBook(addBookArgs);
+    @Mutation(returns => String, { name: "addBook" })
+    addBook(@Args("addBookArgs") addBookArgs: AddBookArgs) {
+        return this.bookService.addBook(addBookArgs);
 
-}
+    }
 
-@Mutation(returns => String, { name: "updateBook" })
-updateBook(@Args("updateBookArgs") updateBookArgs: updateBookArgs) {
-return this. bookService.updateBook(updateBookArgs) ;
+    @Mutation(returns => String, { name: "updateBook" })
+    updateBook(@Args("updateBookArgs") updateBookArgs: updateBookArgs) {
+        return this.bookService.updateBook(updateBookArgs);
 
 
-}
+    }
 }
