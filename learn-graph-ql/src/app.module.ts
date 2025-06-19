@@ -32,7 +32,7 @@ import { BookModule } from './book/book.module';
     BookModule,
   ],
   controllers: [AppController],
-  providers: [AppService, AppResolver], // ⬅️ Add AppResolver here
+  providers: [AppService, AppResolver], 
 })
 export class AppModule {}
 

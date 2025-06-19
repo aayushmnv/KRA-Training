@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+package todo;
+
+service TodoService {
+  rpc CreateTodo (CreateTodoRequest) returns (TodoResponse);
+  rpc GetTodosByUserId (GetTodosByUserIdRequest) returns (TodoList);
+}
+
+message CreateTodoRequest {
+  string userId = 1;
+  string title = 2;
+}
+
+message GetTodosByUserIdRequest {
+  string userId = 1;
+}
+
+message TodoResponse {
+  string id = 1;
+  string userId = 2;
+  string title = 3;
+}
+
+message TodoList {
+  repeated TodoResponse todos = 1;
+}
