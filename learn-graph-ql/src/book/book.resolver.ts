@@ -35,7 +35,5 @@ export class BookResolver {
     @Mutation(returns => String, { name: "updateBook" })
     updateBook(@Args("updateBookArgs") updateBookArgs: updateBookArgs) {
         return this.bookService.updateBook(updateBookArgs);
-
-
     }
 }

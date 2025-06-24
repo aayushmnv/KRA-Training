@@ -4,7 +4,7 @@ import { AppModule } from './api-gateway.module';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   await app.listen(process.env.port ?? 3000);
-  console.log('listening on port 3000');
+  console.log('api gateway listening on port 3000');
   
 }
 bootstrap();

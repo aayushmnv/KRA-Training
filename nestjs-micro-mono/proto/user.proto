@@ -4,11 +4,16 @@ package user;
 
 service UserService {
   rpc GetUser (UserRequest) returns (UserResponse);
+  rpc GetUserByEmail (UserRequestByEmail) returns (UserLoginResponse);
   rpc CreateUser (CreateUserRequest) returns (UserResponse);
   rpc UpdateUser (UpdateUserRequest) returns (UserResponse);
   rpc DeleteUser (UserRequest) returns (Empty);
 }
 
+
+message UserRequestByEmail{
+  string email = 1;
+}
 message UserRequest {
   string id = 1;
 }
@@ -21,15 +26,19 @@ message CreateUserRequest {
 
 message UpdateUserRequest {
   string id = 1;
-  string name = 2;
-  string email = 3;
-  string password = 4;
+  optional string name = 2;
+  optional string email = 3;
+  optional string password = 4;
 }
-
 message UserResponse {
   string id = 1;
   string name = 2;
   string email = 3;
+}
+message UserLoginResponse {
+  string id = 1;
+  string email = 2;
+  string password =3; 
 }
 
 message Empty {}
